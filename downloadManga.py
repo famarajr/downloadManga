@@ -78,7 +78,7 @@ if __name__ == "__main__":
 	nom = sys.argv[1]
 	chapiters = sys.argv[2]
 	baseUrl = "http://www.mangapanda.com"
-	os.chdir("/home/linzo/Desktop")
+	os.chdir("/home/junior/Bureau/Projet")
 
 	if not os.path.exists(nom):
 		try:
