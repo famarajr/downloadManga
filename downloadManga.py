@@ -17,7 +17,7 @@ def getImages(urlEpisode, curChap):
 			imgFile = Image.open(BytesIO(res.content))
 			imgFile.save(os.path.basename(urlEpisode)+'.jpg')
 		except Exception as e:
-			print("Impossible de telecharger cettte image")
+			print("Telechargement impossible")
 
 		nextUrl  = base.select_one("div[id='imgholder'] a").get('href')
 		if int(nextUrl.split("/")[2]) != curChap:
@@ -39,7 +39,7 @@ def downloadManga(nom, params):
 					try:
 						os.mkdir(f"Chapitre{i}")
 					except :
-						print(f"Impossible de cree le dossier du chapitre{i}")
+						print(f"Creation Impossible le dossier du chapitre{i}")
 						sys.exit()
 
 				os.chdir(f"Chapitre{i}")
@@ -54,7 +54,7 @@ def downloadManga(nom, params):
 					try:
 						os.mkdir(f"Chapitre{i}")
 					except :
-						print(f"Impossible de cree le dossier du chapitre{i}")
+						print(f"Creation Impossible le dossier du chapitre{i}")
 						sys.exit()
 						
 				os.chdir(f"Chapitre{i}")
@@ -67,7 +67,7 @@ def downloadManga(nom, params):
 			try:
 				os.mkdir(f"Chapitre{chap}")
 			except :
-				print(f"Impossible de cree le dossier du chapitre{i}")
+				print(f"Creation Impossible le dossier du chapitre{i}")
 				sys.exit()
 						
 		os.chdir(f"Chapitre{chap}")
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 		try:
 			os.mkdir(nom)
 		except :
-			print(f"Impossible de cree le dossier du chapitre{i}")
+			print(f"Creation Impossible le dossier du chapitre{i}")
 			sys.exit()
 
 	os.chdir(nom)
