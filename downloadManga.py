@@ -6,23 +6,23 @@ import re
 from io import BytesIO
 from PIL import Image
 
-def getImages(urlEpis, curChap):
-	while urlEpis:		
-		data = requests.get(urlEpis)
+def getImages(urlEpisode, curChap):
+	while urlEpisode:		
+		data = requests.get(urlEpisode)
 		base = bs4.BeautifulSoup(data.text, 'html.parser')
 		try:
 			img = base.select_one("img[id='img']").get('src')
-			print(f"Downloading {urlEpis}")
+			print(f"Downloading {urlEpisode}")
 			res = requests.get(img)
 			imgFile = Image.open(BytesIO(res.content))
-			imgFile.save(os.path.basename(urlEpis)+'.jpg')
+			imgFile.save(os.path.basename(urlEpisode)+'.jpg')
 		except Exception as e:
 			print("Impossible de telecharger cettte image")
 
 		nextUrl  = base.select_one("div[id='imgholder'] a").get('href')
 		if int(nextUrl.split("/")[2]) != curChap:
 			break
-		urlEpis =f"{baseUrl+nextUrl}"
+		urlEpisode =f"{baseUrl+nextUrl}"
 
 
 def downloadManga(nom, params):
@@ -34,7 +34,7 @@ def downloadManga(nom, params):
 		if sep == '-':
 			debut, fin = params[0], params[1]+1
 			for i in range(debut, fin):
-				urlEpis = f"{url}/{i}/1"
+				urlEpisode = f"{url}/{i}/1"
 				if not os.path.exists(f"Chapitre{i}"):
 					try:
 						os.mkdir(f"Chapitre{i}")
@@ -43,13 +43,13 @@ def downloadManga(nom, params):
 						sys.exit()
 
 				os.chdir(f"Chapitre{i}")
-				getImages(urlEpis, i)
+				getImages(urlEpisode, i)
 				os.chdir("..")
 				
 
 		elif sep == ',':
 			for i in params:
-				urlEpis = f"{url}/{i}/1"
+				urlEpisode = f"{url}/{i}/1"
 				if not os.path.exists(f"Chapitre{i}"):
 					try:
 						os.mkdir(f"Chapitre{i}")
@@ -58,7 +58,7 @@ def downloadManga(nom, params):
 						sys.exit()
 						
 				os.chdir(f"Chapitre{i}")
-				getImages(urlEpis, i)
+				getImages(urlEpisode, i)
 				os.chdir("..")
 
 	elif len(params) == 1:
@@ -71,8 +71,8 @@ def downloadManga(nom, params):
 				sys.exit()
 						
 		os.chdir(f"Chapitre{chap}")
-		urlEpis = f"{url}/{chap}/1"
-		getImages(urlEpis, chap)
+		urlEpisode = f"{url}/{chap}/1"
+		getImages(urlEpisode, chap)
 	print("Download Completed")
 if __name__ == "__main__":
 	nom = sys.argv[1]
