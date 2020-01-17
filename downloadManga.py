@@ -6,7 +6,7 @@ import re	#opérations sur les expressions rationnelles
 from io import BytesIO
 from PIL import Image
 
-def getImages(urlEpisode, currentChap):	#defintion de la fonction qui permet de recuperer l'image
+def recupImages(urlEpisode, currentChap):	#defintion de la fonction qui permet de recuperer l'image
 	while urlEpisode:		
 		data = requests.get(urlEpisode)		#Recuperation de l'URL de l'episode
 		base = bs4.BeautifulSoup(data.text, 'html.parser')
@@ -43,7 +43,7 @@ def downloadManga(nom, parametres):			#defintion de la fonction qui indique comm
 						sys.exit()
 
 				os.chdir(f"Chapitre{i}")
-				getImages(urlEpisode, i)  #Appel de lafonction getImage
+				recupImages(urlEpisode, i)  #Appel de lafonction getImage
 				os.chdir("..")
 				
 
@@ -58,7 +58,7 @@ def downloadManga(nom, parametres):			#defintion de la fonction qui indique comm
 						sys.exit()
 						
 				os.chdir(f"Chapitre{i}")
-				getImages(urlEpisode, i)
+				recupImages(urlEpisode, i)
 				os.chdir("..")
 
 	elif len(parametres) == 1:		#Cas dans lequel nous avons un seul parametre 
@@ -72,7 +72,7 @@ def downloadManga(nom, parametres):			#defintion de la fonction qui indique comm
 						
 		os.chdir(f"Chapitre{chap}")
 		urlEpisode = f"{url}/{chap}/1"
-		getImages(urlEpisode, chap)
+		recupImages(urlEpisode, chap)
 	print("Download Completed")
 if __name__ == "__main__": #Page d'acceuil
 	nom = sys.argv[1]
